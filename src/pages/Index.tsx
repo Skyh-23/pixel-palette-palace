@@ -1,16 +1,58 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect, useCallback } from "react";
+import LoadingScreen from "@/components/LoadingScreen";
+import PixelNavbar from "@/components/PixelNavbar";
+import HeroSection from "@/components/HeroSection";
+import ServicesSection from "@/components/ServicesSection";
+import PortfolioSection from "@/components/PortfolioSection";
+import AboutSection from "@/components/AboutSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import ContactSection from "@/components/ContactSection";
+import PixelFooter from "@/components/PixelFooter";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [loading, setLoading] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const handleLoadingComplete = useCallback(() => {
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading]);
+
+  if (loading) {
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
+  }
+
+  // Interpolate from #70ff00 (neon green) → #eeffdd (very light green) based on scroll
+  const r = Math.round(112 + (238 - 112) * scrollProgress);
+  const g = Math.round(255 + (255 - 255) * scrollProgress);
+  const b = Math.round(0 + (221 - 0) * scrollProgress);
+  const bgColor = `rgb(${r}, ${g}, ${b})`;
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen relative scanlines" style={{ background: bgColor, transition: 'background 0.3s ease' }}>
+      <PixelNavbar />
+      <HeroSection />
+      <ServicesSection />
+      <PortfolioSection />
+      <AboutSection />
+      <TestimonialsSection />
+      <ContactSection />
+      <PixelFooter />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
