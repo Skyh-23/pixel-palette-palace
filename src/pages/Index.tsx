@@ -3,6 +3,8 @@ import LoadingScreen from "@/components/LoadingScreen";
 import PixelNavbar from "@/components/PixelNavbar";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
+import ProcessSection from "@/components/ProcessSection";
+import TechStackSection from "@/components/TechStackSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import AboutSection from "@/components/AboutSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -35,7 +37,7 @@ const Index = () => {
     return <LoadingScreen onComplete={handleLoadingComplete} />;
   }
 
-  // Interpolate from #70ff00 (neon green) → #eeffdd (very light green) based on scroll
+  // Interpolate from #70ff00 → #eeffdd based on scroll
   const r = Math.round(112 + (238 - 112) * scrollProgress);
   const g = Math.round(255 + (255 - 255) * scrollProgress);
   const b = Math.round(0 + (221 - 0) * scrollProgress);
@@ -46,6 +48,8 @@ const Index = () => {
       <PixelNavbar />
       <HeroSection />
       <ServicesSection />
+      <ProcessSection />
+      <TechStackSection />
       <PortfolioSection />
       <AboutSection />
       <TestimonialsSection />
